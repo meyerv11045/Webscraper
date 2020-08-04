@@ -4,7 +4,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException,NoSuchElementException,WebDriverException
-import requests
 import csv
 import re
 
@@ -75,7 +74,7 @@ class NutritionFactsScraper:
                 fat_xpath1 = '/html/body/div[1]/div[2]/div[2]/div[1]/main/div/div/div[3]/section/div/div/div[2]/div[1]/div/div[7]/div[1]/span[1]'
                 carbs_xpath1 = '/html/body/div[1]/div[2]/div[2]/div[1]/main/div/div/div[3]/section/div/div/div[2]/div[1]/div/div[10]/div[1]/span[1]'
                 protein_xpath1 = '/html/body/div[1]/div[2]/div[2]/div[1]/main/div/div/div[3]/section/div/div/div[2]/div[1]/div/div[11]/div[1]/span[1]'
-                calories, fat, carbs, protein = self.get_nutrition_from_xpaths(driver,calories_xpath1,fat_xpath1,carbs_xpath1,protein_xpath1)
+                calories, fat, carbs, protein = NutritionFactsScraper.get_nutrition_from_xpaths(driver,calories_xpath1,fat_xpath1,carbs_xpath1,protein_xpath1)
             except (TimeoutException, NoSuchElementException):
                 #Nutrition Button to view Nutrition Info
                 try: 
@@ -85,7 +84,7 @@ class NutritionFactsScraper:
                         fat_xpath2 = '/html/body/div[1]/div[2]/div[2]/div[1]/main/div/div/div[3]/section[2]/div/div/div[2]/div[1]/div/div[7]/div[1]/span[1]' 
                         carbs_xpath2 = '/html/body/div[1]/div[2]/div[2]/div[1]/main/div/div/div[3]/section[2]/div/div/div[2]/div[1]/div/div[10]/div[1]/span[1]'
                         protein_xpath2 = '/html/body/div[1]/div[2]/div[2]/div[1]/main/div/div/div[3]/section[2]/div/div/div[2]/div[1]/div/div[11]/div[1]/span[1]'
-                        calories, fat, carbs, protein =  self.get_nutrition_from_xpaths(driver,calories_xpath2,fat_xpath2,carbs_xpath2,protein_xpath2)
+                        calories, fat, carbs, protein =  NutritionFactsScraper.get_nutrition_from_xpaths(driver,calories_xpath2,fat_xpath2,carbs_xpath2,protein_xpath2)
                     except (TimeoutException,NoSuchElementException):
                         try: #Nutrition Btn Section 1 in xpath
                             calories_xpath3 = '/html/body/div[1]/div[2]/div[2]/div[1]/main/div/div/div[3]/section[1]/div/div/div[2]/div[1]/div/div[5]/span[2]'
