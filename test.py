@@ -3,19 +3,19 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException,NoSuchElementException
-from selenium.webdriver.firefox.options import Options
-
+from selenium.webdriver.chrome.options import Options
 import re
 
-#Initialize WebDriver
-options = Options()
-options.headless = True
-path = './geckodriver'
-driver = webdriver.Firefox(options=options,executable_path=path)
+no_nutrition_url = 'https://www.kroger.com/p/kroger-grade-a-large-eggs/0001111060933' 
+url = 'https://www.kroger.com/p/goldfish-flavor-blasted-xtra-cheddar-baked-snack-crackers/0001410008548' 
+url2 = 'https://www.kroger.com/p/ball-park-hot-dog-buns-8-count/0005040075116'
 
+#Initialize WebDriver
+# options = Options()
+# options.headless = True
+driver = webdriver.Chrome(executable_path='./chromedriver')
 try:
-    #no_nutrition_url = 'https://www.kroger.com/p/kroger-grade-a-large-eggs/0001111060933' 
-    url = 'https://www.kroger.com/p/goldfish-flavor-blasted-xtra-cheddar-baked-snack-crackers/0001410008548' #https://www.kroger.com/p/ball-park-hot-dog-buns-8-count/0005040075116
+    
     driver.get(url)
     try:
         #Confirm the location (otherwise other buttons won't work)
@@ -26,10 +26,10 @@ try:
         confirm_loc_btn.click()
         print('Location Confirmed')
     except TimeoutException:
-        pass
+        print('No Location Btn')
 
     try:
-        #Select the nutrition view to render the nutrition info
+        #Select the nutrition btn to view the nutrition info
         nutrition_xpath = '/html/body/div[1]/div[2]/div[2]/div[1]/main/div/div/div[3]/div/button[2]'
         nutritionBtn = WebDriverWait(driver,7).until(
             EC.presence_of_element_located((By.XPATH,nutrition_xpath))
@@ -42,7 +42,6 @@ try:
         fat_xpath = '/html/body/div[1]/div[2]/div[2]/div[1]/main/div/div/div[3]/section[2]/div/div/div[2]/div[1]/div/div[7]/div[1]/span[1]' 
         carbs_xpath = '/html/body/div[1]/div[2]/div[2]/div[1]/main/div/div/div[3]/section[2]/div/div/div[2]/div[1]/div/div[10]/div[1]/span[1]'
         protein_xpath = '/html/body/div[1]/div[2]/div[2]/div[1]/main/div/div/div[3]/section[2]/div/div/div[2]/div[1]/div/div[11]/div[1]/span[1]'
-        
 
         #Collect raw data
         calories = WebDriverWait(driver,4).until(
@@ -64,7 +63,6 @@ try:
         print('Total Fat:',fat)
         print('Total Carbs:',carbs)
         print('Protein:',protein)
-
 
     except TimeoutException:
         print('No Nutrition Info')
